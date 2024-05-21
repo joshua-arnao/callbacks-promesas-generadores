@@ -9,13 +9,25 @@ import { heroes } from '../data/Heroes';
 export const callbacksComponent = (element) => {
   console.log('callbacksComponent');
 
-  const id = '5d86371f1efebc31def272e2';
+  const id = '5d86371f1efebc31def272e21';
+  const id2 = '5d86371f2343e37870b91ef1';
+
   findHeroe(id, (error, hero) => {
     if (error) {
       element.innerHTML = error;
       return;
     }
-    element.innerHTML = hero?.name;
+
+    findHeroe(id2, (error, hero2) => {
+      if (error) {
+        element.innerHTML = error;
+        return;
+      }
+
+      element.innerHTML = `${hero?.name} / ${hero2?.name}`;
+    });
+
+    // element.innerHTML = hero?.name;
   });
 };
 
