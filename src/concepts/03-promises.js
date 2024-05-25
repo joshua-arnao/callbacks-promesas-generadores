@@ -11,6 +11,12 @@ export const promiseComponent = (element) => {
     element.innerHTML = hero.name;
   };
 
+  const renderTwoHeros = (hero, hero2) => {
+    element.innerHTML = `
+    <h2>${hero.name}</h2>
+    <h2>${hero2.name}</h2>
+    `;
+  };
   const renderError = (error) => {
     element.innerHTML = `
     <h2>Error:</h2>
@@ -18,16 +24,47 @@ export const promiseComponent = (element) => {
     `;
   };
 
-  const id = '5d86371f1efebc31def272e21';
-  findHero(id)
-    .then(
-      // (hero) => rederHero(hero)
-      rederHero
-    )
-    .catch(
-      // (error) => renderError(error)
-      renderError
-    );
+  const id = '5d86371f1efebc31def272e2';
+  const id2 = '5d86371f2343e37870b91ef1';
+
+  Promise.all([findHero(id), findHero(id2)])
+    .then(([hero1, hero2]) => {
+      renderTwoHeros(hero1, hero2);
+    })
+    .catch(renderError);
+
+  //! Forma 2
+  // let hero1;
+  // findHero(id)
+  //   .then((hero) => {
+  //     hero1 = hero;
+
+  //     return findHero(id2);
+  //   })
+  //   .then((hero2) => {
+  //     renderTwoHeros(hero1, hero2);
+  //   })
+  //   .catch(renderError);
+
+  //! Forma 1
+  // findHero(id)
+  //   .then(
+  //     // (hero) => rederHero(hero)
+  //     // rederHero
+  //     (hero) => {
+  //       // hero = hero;
+
+  //       findHero(id2)
+  //         .then((hero2) => {
+  //           renderTwoHeros(hero, hero2);
+  //         })
+  //         .catch(renderError);
+  //     }
+  //   )
+  //   .catch(
+  //     // (error) => renderError(error)
+  //     renderError
+  //   );
 };
 
 /**
